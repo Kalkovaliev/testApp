@@ -1,0 +1,126 @@
+<div class="clearfix">
+	<div class="col-md-3">
+		<h2>Order products</h2>
+	</div>
+	<div class="col-md-offset-8 col-md-1">
+		<button type="button" class="btn btn-default pull-right"
+			ng-click="goBack()">
+			<span class="glyphicon glyphicon-chevron-left"
+				style="font-size: 12px;"></span> <span>Back</span>
+	</div>
+
+</div>
+<div class="clearfix">
+	<div class="panel panel-default">
+		<div class="panel-body">
+
+			<form ng-submit="update()" name="form">
+
+				
+				<div class="form-group">
+					<label>Product:</label>
+						<select  class="form-control" name="mySelect" id="mySelect"
+						ng-options="option.name for option in productsToShow track by option.id"
+						ng-model="product" required></select>
+				</div>
+				<div class="form-group">
+					<label>Quantity:</label> <input type="number" class="form-control" min="0"
+						ng-model="product.quantity" placeholder="quantity" required>
+				</div>
+
+
+
+				<button type="submit" class="btn btn-primary"
+					ng-disabled="form.$invalid">
+					<i class="glyphicon glyphicon-floppy-disk"></i>Save
+				</button>
+				<button class="btn btn-default" type="reset"
+					ng-click="clearFields()">
+					<i class="glyphicon glyphicon-refresh"></i> Reset
+				</button>
+			</form>
+
+
+		</div>
+	</div>
+
+
+</div>
+<div class="clearfix">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<form ng-submit="saveOrder()" name="form2"
+				ng-show="products.length>0">
+
+
+				<div class="form-group">
+					<label>Description of the order:</label> <input type="text"
+						class="form-control" ng-model="order.description" name=""
+						placeholder="Description" required>
+
+					<div class="error"
+						ng-show="form2.description.$dirty && form2.description.$invalid">
+						<small class="error" ng-show="form2.description.$error.required">
+							Description of the order is required. </small> <small class="error"
+							ng-show="form2.description.$error.minlength"> Description
+							of the order is required to be at least 1 characters </small> <small
+							class="error" ng-show="form2.description.$error.maxlength">
+							Description of the order cannot be longer than 100 characters </small>
+					</div>
+				</div>
+
+
+
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Product name</th>
+							<th>Quantity</th>
+							<th>Total Price</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr ng-repeat="item in products">
+							<td><a href="#/product/{{item.id}}">{{item.name}}</a></td>
+							<td>{{item.quantity}}</td>
+							<td>{{item.totalPrice}}</td>
+							<td>
+
+								<button class="btn btn-xs btn-default" ng-click="edit(item)">
+									Edit</button>
+
+								<button class="btn btn-xs btn-danger" ng-click="remove(item)">
+									Remove</button>
+							</td>
+						</tr>
+				</table>
+
+
+				<div class="panel-footer text-right">
+					<div class="panel panel-danger text-center text-danger"
+						ng-show="saveErrMsg">{{saveErrMsg}}</div>
+					<div class="panel panel-success text-center text-success"
+						ng-show="saveOkMsg">{{saveOkMsg}}</div>
+				</div>
+
+				<button type="submit" class="btn btn-primary"
+					ng-disabled="form2.$invalid">
+					<i class="glyphicon glyphicon-floppy-disk"></i>Save
+				</button>
+				<button class="btn btn-default" type="reset"
+					ng-click="clearFields()">
+					<i class="glyphicon glyphicon-refresh"></i> Reset
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+</div>

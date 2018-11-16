@@ -1,0 +1,215 @@
+<div class="clearfix">
+
+
+	<div class="col-md-3">
+		<h2>Order products</h2>
+	</div>
+	<div class="col-md-offset-7 col-md-1">
+		<button type="button" ng-click="openConfirmBackModal('md')"
+			class="btn btn-success pull-right">
+			<span class="glyphicon glyphicon-plus" style="font-size: 12px;"></span>
+			<span>Add new Product</span>
+			</button>
+	</div>
+	<div class="col-md-1">
+		<button type="button" class="btn btn-default pull-right"
+			ng-click="goBack()">
+			<span class="glyphicon glyphicon-chevron-left"
+				style="font-size: 12px;"></span> <span>Back</span>
+	</div>
+
+</div>
+<div class="clearfix">
+	<div class="panel panel-default">
+		<div class="panel-body">
+
+			<form ng-submit="update()" name="form">
+
+				<!-- <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="{{'name' | translate}}"
+                           ng-model="product.name" ng-minlength=1 ng-maxlength=50 required>
+                    <div class="error"
+                         ng-show="form.name.$dirty && form.name.$invalid">
+                        <small class="error"
+                               ng-show="form.name.$error.required">
+                             Product name is required.
+                        </small>
+                        <small class="error"
+                               ng-show="form.name.$error.minlength">
+                            Product name is required to be at least 1 characters
+                        </small>
+                        <small class="error"
+                               ng-show="form.name.$error.maxlength" >
+                           Product name cannot be longer than 50 characters
+                        </small>
+                    </div>
+       </div>   -->
+				<div class="form-group">
+					<label>Product:</label>
+					<!-- <select name="repeatSelect" id="repeatSelect" ng-model="company.city" ng-required="true">
+      <option ng-repeat="item in cities" value="{{item .id}}">{{item .name}}</option>
+    </select>
+    -->
+					<select name="mySelect" id="mySelect"
+						ng-options="option.name for option in productsToShow track by option.id"
+						ng-model="product" required></select>
+				</div>
+				<div class="form-group">
+					<label>Quantity:</label> <input type="number" class="form-control"
+						min="0" ng-model="product.quantity" placeholder="quantity"
+						required>
+				</div>
+
+
+
+				<button type="submit" class="btn btn-primary"
+					ng-disabled="form.$invalid">
+					<i class="glyphicon glyphicon-floppy-disk"></i>Save
+				</button>
+				<button class="btn btn-default" type="reset"
+					ng-click="clearFields()">
+					<i class="glyphicon glyphicon-refresh"></i> Reset
+				</button>
+			</form>
+
+
+		</div>
+	</div>
+
+
+</div>
+<div class="clearfix">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<form ng-submit="updateOrder()" name="form2"
+				ng-show="products.length>0">
+
+
+				<div class="form-group">
+					<label>Description of the order:</label> <input type="text"
+						class="form-control" ng-model="order.description" name=""
+						placeholder="Description" required>
+
+					<div class="error"
+						ng-show="form2.description.$dirty && form2.description.$invalid">
+						<small class="error" ng-show="form2.description.$error.required">
+							Description of the order is required. </small> <small class="error"
+							ng-show="form2.description.$error.minlength"> Description
+							of the order is required to be at least 1 characters </small> <small
+							class="error" ng-show="form2.description.$error.maxlength">
+							Description of the order cannot be longer than 100 characters </small>
+					</div>
+				</div>
+
+
+
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Product name</th>
+							<th>Quantity</th>
+							<th>Total Price</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr ng-repeat="item in products">
+							<td><a href="#/product/{{item.product.id}}">{{item.product.name}}</a></td>
+							<td>{{item.quantity}}</td>
+							<td>{{item.totalprice}}</td>
+							<td>
+
+								<button class="btn btn-xs btn-default" ng-click="edit(item)">
+									Edit</button>
+								<button class="btn btn-xs btn-danger" ng-click="remove(item)">
+									Remove</button>
+							</td>
+						</tr>
+				</table>
+
+
+				<div class="panel-footer text-right">
+					<div class="panel panel-danger text-center text-danger"
+						ng-show="saveErrMsg">{{saveErrMsg}}</div>
+					<div class="panel panel-success text-center text-success"
+						ng-show="saveOkMsg">{{saveOkMsg}}</div>
+				</div>
+
+				<button type="submit" class="btn btn-primary"
+					ng-disabled="form2.$invalid">
+					<i class="glyphicon glyphicon-floppy-disk"></i>Save
+				</button>
+				<button class="btn btn-default" type="reset"
+					ng-click="clearFields()">
+					<i class="glyphicon glyphicon-refresh"></i> Reset
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/ng-template" id="ConfirmBackModalContent.html">
+        <div class="modal-header">
+				<h4 class="modal-title">Add new Product</h4>         
+        </div>       
+        <div class="modal-body">
+			<div class="row">
+				<div class="col-md-12">
+				<div margin-right:5px" >
+					<div>
+
+
+
+
+<form ng-submit="save()" name="form">
+
+			
+				<div class="form-group">
+					<label>Product:</label>
+				
+					<select name="mySelect" id="mySelect" class="form-control"
+						ng-options="option.name for option in productsToShow track by option.id"
+						ng-model="product" required></select>
+				</div>
+				<div class="form-group">
+					<label>Quantity:</label> <input type="number" class="form-control" min="0"
+						ng-model="product.quantity" placeholder="quantity" required>
+				</div>
+
+				<div class="panel-footer text-right">
+					<div class="panel panel-danger text-center text-danger"
+						ng-show="saveErrMsg">{{saveErrMsg}}</div>
+					<div class="panel panel-success text-center text-success"
+						ng-show="saveOkMsg">{{saveOkMsg}}</div>
+				</div>
+			<div class="row" style="margin-top:5px;margin-left:0.5%">
+				<button type="submit" class="btn btn-primary"
+					ng-disabled="form.$invalid">
+					<i class="glyphicon glyphicon-floppy-disk"></i>Save
+				</button>
+				<button class="btn btn-default" type="reset"
+					ng-click="clearFields()">
+					<i class="glyphicon glyphicon-refresh"></i> Reset
+				</button>
+ 				   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+			</form>
+					
+					</div>   
+                </div>
+           
+                
+             
+				</div>
+			</div>   
+
+	
+		
+    </script>
+
+
+
+
+</div>

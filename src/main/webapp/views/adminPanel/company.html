@@ -1,0 +1,127 @@
+
+
+<div class="clearfix">
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="clearfix">
+				<div class="col-md-4">
+					<h3>Companies</h3>
+				</div>
+				<div class="col-md-3 col-md-offset-5">
+					<a href="#/company"><button style="margin-top: 10px;"
+							type="button" class="btn btn-success">
+							<span class="glyphicon glyphicon-plus
+  "></span> Add new
+							company
+						</button></a>
+				</div>
+
+			</div>
+		</div>
+		<div class="panel-body">
+			<form name="form" ng-submit="search()">
+				<div class="clearfix">
+					<div class="col-md-2">
+						<span class="glyphicon glyphicon-search"></span> <b>Search</b>
+					</div>
+				</div>
+
+				<div class="clearfix">
+					<div class="col-md-4">
+						<div class="form-group">
+
+							<input type="text" class="form-control" name="searchName"
+								placeholder="{{'name' | translate}}" ng-model="companyName"
+								ng-minlength=1 ng-maxlength=50>
+							<div class="error"
+								ng-show="form.searchName.$dirty && form.searchName.$invalid">
+
+								<small class="error" ng-show="form.searchName.$error.minlength">
+									Company name is required to be at least 1 characters </small> <small
+									class="error" ng-show="form.searchName.$error.maxlength">
+									Company name cannot be longer than 50 characters </small>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<select class="form-control" name="mySelect" id="mySelect"
+								placeholder="city" ng-options="option.name for option in cities track by option.id"
+								ng-model="companyCity"><option value='' disabled selected>Choose city</option></select>
+
+						</div>
+					</div>
+
+				</div>
+
+				<div class="clearfix" style="margin-top: 10px;">
+					<div class="col-md-4">
+						<button type="submit" ng-click="search()" class="btn btn-primary">
+							</i>Search
+						</button>
+						<button class="btn btn-default" type="reset" ng-click="clear()">
+							<i class="glyphicon glyphicon-refresh"></i> Reset
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+</div>
+<div class="clearfix">
+<div class="panel-footer text-right">
+		<div class="panel panel-danger text-center text-danger"
+			ng-show="error">{{error}}</div>
+		<div class="panel panel-success text-center text-success"
+			ng-show="success">{{success}}</div>
+	</div>
+	<table class="table" ng-show="companies.length>0">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>City</th>
+				<th>Phone</th>
+				<th>Address</th>
+				<th style="padding-left: 25px;">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr ng-repeat="item in companies">
+				<th scope="row">{{item.id}}</th>
+				<td>{{item.name}}</td>
+				<td>{{item.city.name}}</td>
+				<td>{{item.phone}}</td>
+				<td>{{item.adress}}</td>
+				<td><a href="#/company/{{item.id}}">
+						<button class="btn btn-xs btn-default">View</button>
+				</a>
+					<button class="btn btn-xs btn-danger"
+						ng-click="deleteCompany(item.id)">Remove</button></td>
+			</tr>
+	</table>
+
+</div>
+<div class="row">
+	<div class="col-md-offset-3 col-md-6">
+		<div class="text-center" ng-hide="hidePagination">
+			<pagination total-items="totalItems" ng-model="currentPage"
+				ng-change="pageChanged()" items-per-page="itemsPerPage"
+				previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+				last-text="&raquo;" boundary-links="true" max-size="maxSize"
+				num-pages="numPages" />
+			<div class="paginationDetails">
+				<label>Page:</label> {{currentPage}} / {{numPages}}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+

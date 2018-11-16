@@ -1,0 +1,137 @@
+
+
+<div class="clearfix">
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="clearfix">
+				<div class="col-md-4">
+					<h3>My Orders</h3>
+				</div>
+				<div class="col-md-3 col-md-offset-5">
+					<a href="#/orderItem"><button style="margin-top: 10px;"
+							type="button" class="btn btn-success">
+							<span class="glyphicon glyphicon-plus
+  "></span> Add new order
+						</button></a>
+				</div>
+
+			</div>
+		</div>
+		<div class="panel-body">
+		
+			<form name="form">
+			<div class="clearfix">
+					<div class="col-md-4">
+						<div class="form-group">
+
+							<input type="text" class="form-control" name="searchProductName"
+								placeholder="{{'Product name' | translate}}" ng-model="searchProductName"
+								ng-minlength=1 ng-maxlength=50>
+							<div class="error"
+								ng-show="form.searchProductName.$dirty && form.searchProductName.$invalid">
+
+								<small class="error" ng-show="form.searchProductName.$error.minlength">
+									Product name is required to be at least 1 characters </small> <small
+									class="error" ng-show="form.searchProductName.$error.maxlength">
+									Product name cannot be longer than 50 characters </small>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+						<select class="form-control"
+						name="mySelect" id="mySelect"
+						ng-options="option.name for option in companies track by option.id"
+						ng-model="searchCompany"></select>
+						
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+	 			   <p class="input-group">
+                        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="orderDate" is-open="dt.isOpen" datepicker-options="dateOptions" close-text="Close"><!-- ngIf: isOpen -->
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openCalendarTo($event)" ui-date-format><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+							<div class="error"
+								ng-show="form.searchCompany.$dirty && form.searchCompany.$invalid">
+
+								<small class="error"
+									ng-show="form.searchCompany.$error.minlength"> The city
+									of the company is required to be at least 1 characters </small> <small
+									class="error" ng-show="form.searchCompany.$error.maxlength">
+									The city of the company cannot be longer than 50 characters </small>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			
+				<div class="clearfix">
+						<div class="col-md-4">
+						<button type="submit" ng-click="search()"class="btn btn-primary">
+							</i>Search
+						</button>
+						<button class="btn btn-default" type="reset" ng-click="clear()">
+							<i class="glyphicon glyphicon-refresh"></i> Reset
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+</div>
+<div class="clearfix">
+	<div class="panel-footer text-right">
+		<div class="panel panel-danger text-center text-danger"
+			ng-show="saveErrMsg">{{saveErrMsg}}</div>
+		<div class="panel panel-success text-center text-success"
+			ng-show="saveOkMsg">{{saveOkMsg}}</div>
+	</div>
+	<table class="table" ng-show="orders.length>0">
+		<thead>
+			<tr>
+				<th width="5%">#</th>
+				<th width="80%" style="text-align: center">Description of order</th>
+				<th width="12%" style="text-align: center">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr ng-repeat="item in orders">
+				<th scope="row">{{item.id}}</th>
+				<td>{{item.description}}</td>
+
+				<td><a href="#/order/{{item.id}}">
+						<button class="btn btn-xs btn-default">
+							View</button>
+				</a>
+					<button class="btn btn-xs btn-danger" ng-click="remove(item)">
+						Remove</button></td>
+			</tr>
+	</table>
+
+</div>
+<div class="row">
+	<div class="col-md-offset-3 col-md-6">
+		<div class="text-center" ng-hide="hidePagination">
+			<pagination total-items="totalItems" ng-model="currentPage"
+				ng-change="pageChanged()" items-per-page="itemsPerPage"
+				previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+				last-text="&raquo;" boundary-links="true" max-size="3"
+				num-pages="numPages" />
+			<div class="paginationDetails">
+				<label>Page:</label> {{currentPage}} / {{numPages}}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+

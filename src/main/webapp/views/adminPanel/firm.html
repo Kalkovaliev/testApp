@@ -1,0 +1,64 @@
+<div class="panel panel-primary"> 
+<div class="panel-heading">
+ <h3 class="panel-title">{{title}}</h3> 
+ </div> 
+ <form ng-submit="saveCompany()" name="form">
+ <div class="panel-body"> 
+ <div class="form-group">
+ <label>Name</label>
+ <input type="text" class="form-control" ng-required="true" ng-model="firm.name">
+ <div class="panel-footer text-right">
+ <div class="panel panel-danger text-center text-danger" ng-show="saveErrMsg">
+ {{saveErrMsg}}
+ </div>
+ <div class="panel panel-success text-center text-success" ng-show="saveOkMsg">
+ {{saveOkMsg}}
+ </div>
+ <button class="btn btn-default" type="reset" ng-click="clear()">
+ <i class="glyphicon glyphicon-refresh"></i>
+ Reset
+ </button>
+ 
+ <button class="btn btn-primary" type="submit" ng-disabled="form.$invalid">
+ <i class="glyphicon glyphicon-floppy-disk"></i>
+ Save
+ </button>
+ 
+ 
+ </div>
+ </div>
+ 
+  </div> 
+ </form>
+ </div>
+ 
+ <div class="row">
+  <div class="col-md-12">
+    <table ng-show="firms.length>0" class="table table-bordered table-striped">
+      <tr>
+        <th>Id </th>
+        <th>Group Name</th>
+        
+        <th>Actions</th>
+      </tr>
+      <tr ng-repeat="f in firms">
+      <td>{{f.id}}</td>
+        <td>{{f.name}}</td>
+    
+        <td>
+          <button class="btn btn-xs btn-default"
+                  ng-click="edit(f)">
+            Edit
+          </button>
+          <button class="btn btn-xs btn-danger"
+                  ng-click="remove(f)">
+            Remove
+          </button>
+        </td>
+      </tr>
+    </table>
+
+    <div class="panel panel-warning text-warning" ng-hide="firms.length>0">
+      There are no groups!
+    </div>
+  </div>

@@ -1,0 +1,86 @@
+<div class="clearfix">
+	<div class="col-md-3">
+		<h2>Company</h2>
+	</div>
+	<div class="col-md-offset-8 col-md-1">
+		<button type="button" class="btn btn-default pull-right"
+			ng-click="goBack()">
+			<span class="glyphicon glyphicon-chevron-left"
+				style="font-size: 12px;"></span> <span>Back</span> </a>
+	</div>
+
+</div>
+<div class="clearfix">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<form ng-submit="saveCompany()" name="form">
+
+				<div class="form-group">
+					<label>Name</label> <input type="text" class="form-control"
+						name="name" placeholder="{{'name' | translate}}"
+						ng-model="company.name" ng-minlength=1 ng-maxlength=50 required>
+					<div class="error" ng-show="form.name.$dirty && form.name.$invalid">
+						<small class="error" ng-show="form.name.$error.required">
+							Company name is required. </small> <small class="error"
+							ng-show="form.name.$error.minlength"> Company name
+							confirmation is required to be at least 1 characters </small> <small
+							class="error" ng-show="form.name.$error.maxlength">
+							Company name cannot be longer than 50 characters </small>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>City:</label> <select class="form-control" name="mySelect"
+						id="mySelect"
+						ng-options="option.name for option in cities track by option.id"
+						ng-model="company.city" required></select>
+					<div class="error"
+						ng-show="form.mySelect.$dirty && form.mySelect.$invalid">
+						<small class="error" ng-show="form.mySelect.$error.required">
+							Company is required. </small>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Phone:</label> <input type="text" class="form-control"
+						name="phone" ng-minlength=9 ng-maxlength=50
+						ng-model="company.phone" id="exampleInputPassword1"
+						placeholder="Phone" required>
+					<div class="error"
+						ng-show="form.phone.$dirty && form.phone.$invalid">
+						<small class="error" ng-show="form.phone.$error.required">
+							Company phone is required. </small> <small class="error"
+							ng-show="form.phone.$error.minlength"> Company phone
+							confirmation is required to be at least 9 characters </small> <small
+							class="error" ng-show="form.phone.$error.maxlength">
+							Company phone cannot be longer than 50 characters </small>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Address:</label> <input type="text" class="form-control"
+						ng-model="company.adress" id="exampleInputPassword1"
+						placeholder="Address">
+				</div>
+				<div class="panel-footer text-center">
+					<div class="alert alert-danger" ng-show="error">
+						<strong>{{error}}</strong>
+					</div>
+
+					<div class="alert alert-success" ng-show="success">
+						<strong>{{success}}</strong>
+					</div>
+					
+				</div>
+
+				<button type="submit" class="btn btn-primary"
+					ng-disabled="form.$invalid">
+					<i class="glyphicon glyphicon-floppy-disk"></i>Save
+				</button>
+				<button class="btn btn-default" type="reset"
+					ng-click="clearFields()">
+					<i class="glyphicon glyphicon-refresh"></i> Reset
+				</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+</div>

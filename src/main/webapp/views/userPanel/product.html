@@ -1,0 +1,218 @@
+
+
+<div class="clearfix">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="clearfix">
+				<div class="col-md-4">
+					<h3>Products</h3>
+				</div>
+				<div class="col-md-3 col-md-offset-5">
+					<a href="#/product"><button style="margin-top: 10px;"
+							type="button" class="btn btn-success">
+							<span class="glyphicon glyphicon-plus
+  "></span> Add new
+							Product
+						</button></a>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="panel-body">
+			<form name="form" ng-submit="search()">
+				<div class="clearfix">
+					<div class="col-md-2">
+						<span class="glyphicon glyphicon-search"></span> <b>Search</b>
+					</div>
+				</div>
+
+				<div class="clearfix">
+					<div class="col-md-4">
+						<div class="form-group">
+
+							<input type="text" class="form-control" name="searchName"
+								placeholder="{{'Product name' | translate}}"
+								ng-model="productName" ng-minlength=1 ng-maxlength=50>
+							<div class="error"
+								ng-show="form.searchName.$dirty && form.searchName.$invalid">
+
+								<small class="error" ng-show="form.searchName.$error.minlength">
+									Company name is required to be at least 1 characters </small> <small
+									class="error" ng-show="form.searchName.$error.maxlength">
+									Company name cannot be longer than 50 characters </small>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<select class="form-control" name="mySelect" id="mySelect"
+								placeholder="city"
+								ng-options="option.name for option in companies track by option.id"
+								ng-model="ProductCompany"><option value='' disabled
+									selected>Choose company</option></select>
+
+						</div>
+					</div>
+
+				</div>
+
+				<div class="clearfix" style="margin-top: 10px;">
+					<div class="col-md-4">
+						<button type="submit" class="btn btn-primary">
+							</i>Search
+						</button>
+						<button class="btn btn-default" type="reset" ng-click="clear()">
+							<i class="glyphicon glyphicon-refresh"></i> Reset
+						</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+
+
+
+</div>
+<div class="clearfix">
+	<div class="panel-footer text-right">
+		<div class="panel panel-success text-center text-success"
+			ng-show="success">{{success}}</div>
+		<div class="panel panel-danger text-center text-danger"
+			ng-show="error">{{error}}</div>
+	</div>
+	<table class="table" ng-show="products.length>0">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Company</th>
+				<th>Description</th>
+				<th>Price</th>
+				<th>Available</th>
+				<th style="padding-left: 25px;"
+					ng-show="checkRoles(userRoles.admin)">Actions</th>
+
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr ng-repeat="item in products">
+
+				<th scope="row">{{item.id}}</th>
+				<td>{{item.name}}</td>
+				<td>{{item.company.name}}</td>
+				<td>{{item.description}}</td>
+				<td>{{item.price}}</td>
+				<td>{{item.available}}</td>
+
+				<td ng-show="isAuthorized(userRoles.admin)"><a
+					href="#/product/{{item.id}}">
+						<button class="btn btn-xs btn-default">Edit</button>
+				</a>
+					<button class="btn btn-xs btn-danger"
+						ng-click="deleteProduct(item.id)">Remove</button></td>
+
+
+			</tr>
+		</tbody>
+		<button ng-show="products.length>0" style="float: right;"
+			type="button" field-separator=";" ng-csv="tableData"
+			csv-header="getHeader()" filename="test.csv">Export</button>
+
+		<button type="button" ng-click="ReportModalContent('md')"
+			class="btn btn-success pull-right">
+			<span class="glyphicon glyphicon-plus" style="font-size: 12px;"></span>
+			<span>Import</span>
+		</button>
+	</table>
+
+
+</div>
+
+<div class="row">
+	<div class="col-md-offset-3 col-md-6">
+		<div class="text-center" ng-hide="hidePagination">
+			<pagination total-items="totalItems" ng-model="currentPage"
+				ng-change="pageChanged()" items-per-page="itemsPerPage"
+				previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+				last-text="&raquo;" boundary-links="true" max-size="maxSize"
+				num-pages="numPages" />
+			<div class="paginationDetails">
+				<label>Page:</label> {{currentPage}} / {{numPages}}
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/ng-template" id="ReportModalContent.html">
+        <div class="modal-header">
+				<h4 class="modal-title">Insert new products</h4>         
+        </div>       
+        <div class="modal-body">
+			<div class="row">
+				<div class="col-md-12">
+				<div margin-right:5px" >
+					<div>
+
+			<div class="panel-footer text-center">
+					<div class="alert alert-danger" ng-show="error">
+						<strong>{{error}}</strong>
+					</div>
+
+					<div class="alert alert-success" ng-show="success">
+						<strong>{{success}}</strong>
+					</div>
+				</div>
+
+
+<form ng-submit="save()" name="form">
+
+			
+				<div class="form-group">
+					<label>Company:</label>
+				
+					<select name="mySelect" id="mySelect" class="form-control"
+						ng-options="option.name for option in companiesToShow track by option.id"
+						ng-model="company" required></select>
+				</div>
+				<div class="form-group">
+					<label>FileUpload:</label>
+					<input type="file" file-model="myFile" accept=".csv">
+ 				    
+				</div>
+	
+				<div class="panel-footer text-right">
+					<div class="panel panel-danger text-center text-danger"
+						ng-show="saveErrMsg">{{saveErrMsg}}</div>
+					<div class="panel panel-success text-center text-success"
+						ng-show="saveOkMsg">{{saveOkMsg}}</div>
+				</div>
+			<div class="row" style="margin-top:5px;margin-left:0.5%">
+				<button type="submit" class="btn btn-primary" ng-click = "uploadFile()"
+					ng-disabled="form.$invalid">
+					<i class="glyphicon glyphicon-floppy-disk"></i>Upload File
+				</button>
+				<button class="btn btn-default" type="reset"
+					ng-click="clearFields()">
+					<i class="glyphicon glyphicon-refresh"></i> Reset
+				</button>
+ 				   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+			</form>
+					
+					</div>   
+                </div>
+           
+                
+             
+				</div>
+			</div>   
+
+	
+		
+    </script>
+
+
+
+
